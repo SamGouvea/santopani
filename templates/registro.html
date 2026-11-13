@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block titulo %}Registro de produção e sobras – Padaria Santo Pani{% endblock %}
+{% block conteudo %}
+<h1>Registro de produção e sobras</h1>
+<p class="ajuda">Todos os campos são obrigatórios.</p>
+{% if erros %}<div class="erro-geral" role="alert">Corrija {{ erros|length }} campo(s) para continuar.</div>{% endif %}
+<form class="card" method="post" novalidate>
+  <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+
+  <div class="campo">
+    <label for="data">Data do Registro</label>
+    <input id="data" name="data" type="date" max="{{ hoje }}" value="{{ v.data }}" required
+           {% if erros.data %}aria-invalid="true" aria-describedby="e-data"{% endif %}>
+    {% if erros.data %}<p class="erro-campo" id="e-data">{{ erros.data }}</p>{% endif %}
+  </div>
+
+  <div class="campo">
+    <label for="produto">Tipo de Produto</label>
+    <select id="produto" name="produto" required
+            {% if erros.produto %}aria-invalid="true" aria-describedby="e-produto"{% endif %}>
+      <option value="">Selecione…</option>
+      {% for p in produtos %}
+      <option value="{{ p.id }}" {% if v.produto == p.id|string %}selected{% endif %}>{{ p.nome }}</option>
+      {% endfor %}
+    </select>
+    {% if erros.produto %}<p class="erro-campo" id="e-produto">{{ erros.produto }}</p>{% endif %}
+  </div>
+
+  <div class="cols">
+    <div class="campo">
+      <label for="produzido">Quantidade Produzida (unid.)</label>
+      <input id="produzido" name="produzido" type="number" inputmode="numeric" min="1" max="100000" step="1"
+             value="{{ v.produzido }}" required
+             {% if erros.produzido %}aria-invalid="true" aria-describedby="e-produzido"{% endif %}>
+      {% if erros.produzido %}<p class="erro-campo" id="e-produzido">{{ erros.produzido }}</p>{% endif %}
+    </div>
+    <div class="campo">
+      <label for="sobra">Quantidade Sobrante (unid.)</label>
+      <input id="sobra" name="sobra" type="number" inputmode="numeric" min="0" max="100000" step="1"
+             value="{{ v.sobra }}" required aria-describedby="{{ 'e-sobra' if erros.sobra else 'h-sobra' }}"
+             {% if erros.sobra %}aria-invalid="true"{% endif %}>
+      {% if erros.sobra %}<p class="erro-campo" id="e-sobra">{{ erros.sobra }}</p>
+      {% else %}<p class="ajuda" id="h-sobra">Não pode ser maior que a produzida.</p>{% endif %}
+    </div>
+  </div>
+
+  <button class="btn btn-bloco" type="submit">Concluir Registro e Gerar Alerta</button>
+</form>
+{% endblock %}
