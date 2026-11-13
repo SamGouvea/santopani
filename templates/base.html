@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Padaria Santo Pani{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
+  {% if session.usuario_id %}
+  <header class="topo">
+    <span class="marca">{% include "_logo.html" %} Padaria Santo Pani</span>
+    <nav class="nav" aria-label="Principal">
+      <a class="btn btn-sec" href="{{ url_for('registro') }}">Novo registro</a>
+      <form method="post" action="{{ url_for('sair') }}">
+        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+        <button class="btn btn-sec" type="submit" style="width:auto">Sair ({{ session.usuario_nome }})</button>
+      </form>
+    </nav>
+  </header>
+  {% endif %}
+  <main id="conteudo">{% block conteudo %}{% endblock %}</main>
+</body>
+</html>

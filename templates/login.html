@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block titulo %}Iniciar sessão – Padaria Santo Pani{% endblock %}
+{% block conteudo %}
+<div class="centro">
+  <div class="titulo-marca">
+    <span class="logo-grande">{% include "_logo.html" %}</span>
+    <h1>Padaria Santo Pani</h1>
+    <p class="ajuda">Controle de sobras · Bairro Socorro, Pindamonhangaba</p>
+  </div>
+  <form class="card" method="post" novalidate aria-labelledby="t-login">
+    <h2 id="t-login" style="margin-top:0">Entrar no sistema</h2>
+    {% if erro %}<p class="erro-geral" role="alert">{{ erro }}</p>{% endif %}
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <div class="campo">
+      <label for="usuario">Utilizador</label>
+      <input id="usuario" name="usuario" type="text" autocomplete="username" maxlength="50" required autofocus>
+    </div>
+    <div class="campo">
+      <label for="senha">Palavra-passe</label>
+      <input id="senha" name="senha" type="password" autocomplete="current-password" maxlength="128" required>
+    </div>
+    <button class="btn btn-bloco" type="submit">Iniciar Sessão</button>
+  </form>
+</div>
+{% endblock %}
