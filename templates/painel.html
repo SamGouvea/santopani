@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Painel de alertas – Padaria Santo Pani{% endblock %}
+{% block conteudo %}
+<h1>Painel de alertas e resultados</h1>
+
+<p class="sucesso" role="status"><span class="icone" aria-hidden="true">✓</span> Registro salvo com sucesso.</p>
+
+<h2>Resumo do registro</h2>
+<div class="tabela-rolagem">
+  <table>
+    <thead><tr><th scope="col">Data</th><th scope="col">Produto</th><th scope="col">Produzido</th><th scope="col">Sobra</th><th scope="col">% de sobra</th></tr></thead>
+    <tbody><tr>
+      <td>{{ r.data.strftime('%d/%m/%Y') }}</td><td>{{ r.produto.nome }}</td>
+      <td>{{ r.produzido }}</td><td>{{ r.sobra }}</td><td>{{ r.percentual }}%</td>
+    </tr></tbody>
+  </table>
+</div>
+
+<h2>Alertas de Prioridade</h2>
+<section class="alerta alerta-{{ alerta.nivel }}" role="alert" aria-label="Alerta de prioridade">
+  <p class="titulo"><span aria-hidden="true">{{ alerta.icone }}</span> {{ alerta.texto }}</p>
+  <p class="proximo">Próximo passo: {{ alerta.acao }}</p>
+</section>
+
+<div class="acoes">
+  <a class="btn" href="{{ url_for('preditivo') }}">Analisar Painel Preditivo Completo</a>
+  <a class="btn btn-claro" href="{{ url_for('registro') }}">Novo registro</a>
+</div>
+{% endblock %}

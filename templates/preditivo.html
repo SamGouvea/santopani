@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block titulo %}Painel preditivo – Padaria Santo Pani{% endblock %}
+{% block conteudo %}
+<h1>Painel preditivo (últimos 7 dias)</h1>
+{% if dados %}
+<div class="tabela-rolagem">
+<table>
+  <thead><tr><th scope="col">Produto</th><th scope="col">Produzido</th><th scope="col">Sobra</th><th scope="col">% de sobra</th><th scope="col">Recomendação</th></tr></thead>
+  <tbody>
+  {% for d in dados %}
+  <tr><td>{{ d.nome }}</td><td>{{ d.produzido }}</td><td>{{ d.sobra }}</td><td>{{ d.pct }}%</td><td>{{ d.alerta.icone }} {{ d.alerta.acao }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+<p>Ainda não há registros nos últimos 7 dias. <a href="{{ url_for('registro') }}">Faça o primeiro registro</a>.</p>
+{% endif %}
+<div class="acoes"><a class="btn btn-claro" href="{{ url_for('registro') }}">Novo registro</a></div>
+{% endblock %}
