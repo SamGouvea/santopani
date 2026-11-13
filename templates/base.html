@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block titulo %}Padaria Santo Pani{% endblock %}</title>
+  <meta name="color-scheme" content="light dark">
+  <title>{% block titulo %}Padaria santo Pani{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/tema.js') }}"></script>
 </head>
 <body>
   <a class="pular" href="#conteudo">Ir para o conteúdo</a>
@@ -15,11 +17,15 @@
       <a class="btn btn-sec" href="{{ url_for('registro') }}">Novo registro</a>
       <form method="post" action="{{ url_for('sair') }}">
         <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
-        <button class="btn btn-sec" type="submit" style="width:auto">Sair ({{ session.usuario_nome }})</button>
+        <button class="btn btn-sec" type="submit">Sair ({{ session.usuario_nome }})</button>
       </form>
     </nav>
   </header>
   {% endif %}
   <main id="conteudo">{% block conteudo %}{% endblock %}</main>
+
+  <button id="tema-btn" class="tema-btn" type="button" aria-pressed="false">
+    <span class="tema-icone" aria-hidden="true">☀️</span> Modo escuro
+  </button>
 </body>
 </html>
