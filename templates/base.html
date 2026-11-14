@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>{% block titulo %}Padaria santo Pani{% endblock %}</title>
+ <title>{% block titulo %}Padaria Santo Pani{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <script src="{{ url_for('static', filename='js/tema.js') }}"></script>
 </head>
@@ -25,7 +25,7 @@
   <main id="conteudo">{% block conteudo %}{% endblock %}</main>
 
   <button id="tema-btn" class="tema-btn" type="button" aria-pressed="false">
-    <span class="tema-icone" aria-hidden="true">☀️</span> Modo escuro
-  </button>
+  <span class="tema-icone" aria-hidden="true">☀️</span> <span class="tema-texto">Modo escuro</span>
+</button>
 </body>
 </html>

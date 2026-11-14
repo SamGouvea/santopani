@@ -23,10 +23,12 @@
     var btn = document.getElementById("tema-btn");
     if (!btn) return;
     var icone = btn.querySelector(".tema-icone");
+    var texto = btn.querySelector(".tema-texto");
 
     function atualizar() {
       var escuro = atual() === "dark";
       btn.setAttribute("aria-pressed", escuro ? "true" : "false");
+      texto.textContent = escuro ? "Modo claro" : "Modo escuro";
       icone.textContent = escuro ? "🌙" : "☀️";
     }
 
