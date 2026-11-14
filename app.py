@@ -16,7 +16,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 app = Flask(__name__)
 app.config.update(
     SECRET_KEY=os.environ.get("SECRET_KEY") or secrets.token_hex(32),  # defina SECRET_KEY em produção
-    SQLALCHEMY_DATABASE_URI="sqlite:///santo_pani.db",
+    SQLALCHEMY_DATABASE_URI=os.environ.get("DATABASE_URL", "sqlite:///santo_pani.db"),
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
     SESSION_COOKIE_SECURE=os.environ.get("COOKIE_SECURE", "0") == "1",  # use 1 com HTTPS
@@ -100,8 +100,10 @@ app.jinja_env.globals["csrf_token"] = csrf_token
 @app.before_request
 def proteger_csrf():
     if request.method == "POST":
+        esperado = session.get("_csrf")
         enviado = request.form.get("_csrf", "")
-        if not secrets.compare_digest(enviado, session.get("_csrf", "")):
+        # Rejeita se não há token na sessão ou se o enviado não confere
+        if not esperado or not secrets.compare_digest(enviado.encode(), esperado.encode()):
             abort(400, "Token CSRF inválido.")
 
 
